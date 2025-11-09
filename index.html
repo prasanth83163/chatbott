@@ -1,0 +1,181 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prasanth Chatbot Support</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600\&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(to right, #2193b0, #6dd5ed);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .chat-container {
+      width: 400px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .header {
+      background: #0078d7;
+      color: #fff;
+      text-align: center;
+      padding: 14px;
+      font-size: 18px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .header img {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #fff;
+    }
+
+    .chat-box {
+      flex: 1;
+      padding: 12px;
+      overflow-y: auto;
+    }
+
+    .message {
+      margin: 6px 0;
+      padding: 10px;
+      border-radius: 8px;
+      max-width: 80%;
+      line-height: 1.4;
+    }
+
+    .user {
+      background: #dcf8c6;
+      align-self: flex-end;
+    }
+
+    .bot {
+      background: #eee;
+      align-self: flex-start;
+    }
+
+    .input-area {
+      display: flex;
+      border-top: 1px solid #ccc;
+    }
+
+    input {
+      flex: 1;
+      border: none;
+      padding: 10px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    button {
+      background: #0078d7;
+      border: none;
+      color: white;
+      padding: 10px 16px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background: #005fa3;
+    }
+
+    /* Optional typing animation */
+    .typing {
+      font-style: italic;
+      color: #777;
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="header">
+      <img src="https://cdn-icons-png.flaticon.com/512/4712/4712100.png" alt="Logo">
+      💬 Prasanth Chatbot Support
+    </div>
+
+    <div class="chat-box" id="chatBox"></div>
+
+    <div class="input-area">
+      <input type="text" id="userInput" placeholder="Type a message..." onkeypress="if(event.key==='Enter'){sendMessage();}" />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    const chatBox = document.getElementById("chatBox");
+
+    function addMessage(text, sender) {
+      const msg = document.createElement("div");
+      msg.classList.add("message", sender);
+      msg.innerHTML = text;
+      chatBox.appendChild(msg);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function sendMessage() {
+      const input = document.getElementById("userInput");
+      const text = input.value.trim();
+      if (!text) return;
+
+      addMessage("🧑‍💻 You: " + text, "user");
+      input.value = "";
+
+      // Typing indicator
+      const typing = document.createElement("div");
+      typing.classList.add("typing");
+      typing.innerText = "🤖 Bot is typing...";
+      chatBox.appendChild(typing);
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+      setTimeout(() => {
+        typing.remove();
+        addMessage("🤖 " + getBotReply(text), "bot");
+      }, 800);
+    }
+
+    function getBotReply(input) {
+      const msg = input.toLowerCase();
+
+      if (msg.includes("hi") || msg.includes("hello"))
+        return "Hello! 👋 I'm Prasanth Chatbot. How can I help you today?";
+      if (msg.includes("problem"))
+        return "I'm sorry to hear that 😔. Please describe your issue, and I'll try to assist!";
+      if (msg.includes("thank"))
+        return "You're welcome! 😊 Always happy to help.";
+      if (msg.includes("bye"))
+        return "Goodbye! Have a great day ahead! 🌞";
+      if (msg.includes("help"))
+        return "Sure! I can provide company details, product help, or support info. Try typing 'company details'.";
+      if (msg.includes("company"))
+        return `🏢 Company Name: Prasanth Tech Solutions<br>
+                📍 Location: Tamil Nadu, India<br>
+                📞 Contact: +91 9385487458<br>
+                📧 Email: prasanth@gmail.com<br>
+                🌐 Website: Coming soon!`;
+
+      return "🤔 Hmm... I didn’t get that. Try asking about 'help' or 'company details'.";
+    }
+
+    // Greeting message when chatbot starts
+    addMessage("🤖 Hi! I'm your support chatbot. Type 'help' or 'company details' to get started!", "bot");
+  </script>
+</body>
+</html>
